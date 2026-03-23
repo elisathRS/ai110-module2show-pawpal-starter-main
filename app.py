@@ -55,8 +55,18 @@ with st.form(f"pet_form_{st.session_state.pet_form_key}"):
 
 if owner.list_pets():
     st.markdown("**Your pets:**")
+    pet_data = []
     for pet in owner.list_pets():
-        st.write(f"- {pet.name} ({pet.type}, {pet.breed})")
+        icon = "🐶" if pet.type == "Dog" else "🐱" if pet.type == "Cat" else "🐾"
+        pet_data.append({
+            "Pet":    f"{icon} {pet.name}",
+            "Type":   pet.type,
+            "Breed":  pet.breed,
+            "Gender": pet.gender,
+            "Age":    pet.age,
+            "Weight": f"{pet.weight} lbs",
+        })
+    st.table(pet_data)
 else:
     st.info("No pets yet. Add one above.")
 
